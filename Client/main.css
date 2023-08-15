@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Raleway:wght@200&display=swap');
+
+/* background: linear-gradient(12deg, rgb(rgb(50, 25, 78) 10%, rgb(32, 7, 59) 70%, rgb(39, 28, 70) 100%)); */
+body {
+    background-color: rgb(29, 13, 44);
+}
+
+#topbar {
+    padding: 5.3%;
+    background: linear-gradient(8deg, rgb(50, 25, 78) 0%, rgb(66, 21, 117) 15%, rgb(68, 33, 77) 20%, rgb(30, 23, 68) 100%);
+    border-radius: 0% 0% 18% 8%;
+    box-shadow: rgb(30, 23, 68) 12px 18px 30px;
+    border: transparent;
+}
+
+h1 {
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 0;
+    font-size: 1.6rem;
+    position: absolute;
+    display: inline-block;
+    margin-top: -2%;
+}
+
+#main {
+    padding: 30%;
+    width: 16%;
+    background-color: white;
+    display: inline-block;
+    position: absolute;
+    margin-left: 13.2%;
+    margin-top: 9%;
+    border-radius: 2% 5% 32% 5%;
+}
+
+p {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+}
+
+#footer {
+    padding: 5%;
+    background-color: rgb(24, 24, 24);
+    margin-top: 80%;
+}
