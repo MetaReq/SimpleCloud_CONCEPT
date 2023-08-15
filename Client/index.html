@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uni-Cloud</title>
+    <link rel="stylesheet" href="./main.css">
+    <script>
+      const create = (name, content) => {
+        fetch(`http://127.0.0.1:80/submittxt?name=${name}&content=${content}`);
+        console.log("FETCHED")
+      };
+      const fetchfile = (name) => {
+        console.log(name);
+        fetch(`http://127.0.0.1:80/fetchfile?filename=${name}`)
+        
+      }
+    </script>
+  </head>
+  <body>
+    <div id="topbar">
+      <h1>Un1-Cloud</h1>
+      <input id="txtname" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top: 6.5%; margin-left:10%;" type="text" placeholder="TXT Name">
+      <input id="txtcontent" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top: 9%; margin-left:10%;" type="text" placeholder="TXT Content">
+      <script>
+        const clickTXTCreate = () => {
+          const TXTName = document.getElementById('txtname');
+          const TXTContent = document.getAnimations('txtcontent');
+          console.log("CLICKED CREATE")
+          create(TXTName.value, TXTContent.value)
+        }
+      </script>
+      <button id="ctxt" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top:12%; margin-left:10.34%;" onclick="clickTXTCreate()">Create TXT</button>
+      <input id="file" type="file" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top: 8.5%; margin-left:34%;" placeholder="Choose File">
+      <button id="submitfile" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top:12%; margin-left:34.34%;">Submit File</button>
+      <button id="refresh" style="background-color: white;border:none;border-radius:5%;font-family:'Raleway',sans-serif;padding:5px; width:20%; position:absolute; display:inline-block; margin-top:12%; margin-left:64.34%;">Refresh List</button>
+      
+    </div>
+    <div id="main">
+      <p style="color:black;">
+      <p id="NFF" style="color:black; text-align: left;">No Files Found!</p>
+      </p>
+    </div>
+
+    <script>
+        const GetFileTag = (FileName) => {
+            return `<br> <br> <a id='${FileName}' onclick="fetchfile(${"'"}${FileName}${"'"})" style="text-decoration: underline; cursor:pointer; color:black;" target="_blank"}>${FileName}</a>`
+        }   
+
+      // GETTING FILES
+        const filenode = document.getElementById('file');
+        const submitfile = document.getElementById('submitfile');
+        const NFF = document.getElementById('NFF');
+        refresh.addEventListener('click', () => {
+          fetch('http://127.0.0.1:80/getfiles').then(response => response.json()).then(data => {
+            if (data.message != "success") {
+              console.error('Failed To Fetch Files')
+            };
+            var innerhtmlnew = "";
+            for (const a in data.array) {
+                var filetag = GetFileTag(data.array[a]);
+                innerhtmlnew = innerhtmlnew + filetag
+            };
+            if (NFF.innerText == "No Files Found!") {
+                console.log('no files found')
+                NFF.innerHTML = innerhtmlnew;
+            } else {
+                console.log('files found')
+                NFF.innerHTML = innerhtmlnew;
+            }
+          })
+        });
+
+      // SUBMITTING FILES
+      // EVENT LISTENER
+        submitfile.addEventListener('click', () => {
+          const file = filenode.files[0];
+          console.log("started")
+          if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            fetch('http://127.0.0.1:80/upload', {
+              method: 'POST',
+              body: formData
+            }).then(response => response.json()).then(data => {
+            }).catch(error => {
+              console.error('Error uploading file:', error);
+            });
+          } else {
+            // no file
+          }
+        });
+      </script>
+  </body>
+</html>
